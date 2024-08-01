@@ -1,0 +1,131 @@
+﻿<Window x:Class="Jamsaz.Launcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        AllowsTransparency="True" ShowInTaskbar="True" 
+        Height="605" Width="690" Loaded="Window_Loaded" 
+        Style="{StaticResource ResourceKey=Launcher}"  WindowStartupLocation="CenterScreen"
+        Background="Transparent" ResizeMode="NoResize" FlowDirection="RightToLeft"
+        WindowStyle="None" FocusManager.FocusedElement="{Binding ElementName=passwordTextbox}" Closed="main_Closed"
+        Name="main" >
+
+    <Grid>
+        <Border CornerRadius="30"
+          BorderBrush="Gray"
+          BorderThickness="0"
+          Padding="4" MouseLeftButtonDown="Border_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="592" Height="505">
+           
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.501,0.963" StartPoint="0.501,0.067">
+                    <GradientStop Color="#FF8FBBF2" Offset="1"/>
+                    <GradientStop Color="White" Offset="0.164"/>
+                    <GradientStop Color="#FFEBF5FF"/>
+                    <GradientStop Color="#FFC0D5F2" Offset="0.711"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <!--<Border.Effect>
+                <DropShadowEffect Color="DarkGray" Opacity=".50" ShadowDepth="25" />
+            </Border.Effect>-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="250"></RowDefinition>
+                    <RowDefinition Height="150"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Background="Transparent" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center">سیستم های یکپارچه شرکت مهندسی صنعت و تولید جمع ساز</Label>
+
+                <ScrollViewer Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"  >
+                    <Grid x:Name="appsGrid" x:FieldModifier="public" ShowGridLines="False" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </ScrollViewer>
+
+                <DockPanel Grid.Column="0" Grid.Row="2">
+                    <Label Name="useNameCaption" FontSize="10" VerticalAlignment="Bottom" DockPanel.Dock="Left" Visibility="Hidden">کاربر :</Label>
+                    <Label Name="useNameLabel" FontSize="10" VerticalAlignment="Bottom"  DockPanel.Dock="Left" Visibility="Hidden" ></Label>
+                    <Label x:Name="departmentCaption" FontSize="10" VerticalAlignment="Bottom"  DockPanel.Dock="Left" Visibility="Hidden" >واحد :</Label>
+                    <Label x:Name="departmentLabel" FontSize="10" VerticalAlignment="Bottom"  DockPanel.Dock="Left" Visibility="Hidden" ></Label>
+                    <Label x:Name="fiscalyearCaption" FontSize="10" VerticalAlignment="Bottom"  DockPanel.Dock="Left" Visibility="Hidden" >سال مالی :</Label>
+                    <Label x:Name="fiscalyearLabel" FontSize="10" VerticalAlignment="Bottom"  DockPanel.Dock="Left" Visibility="Hidden" ></Label>
+                </DockPanel>
+                <!--<Frame Grid.Column="1" Grid.Row="2" Source="/UI/Clock.xaml">
+                
+            </Frame>-->
+                <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Center">Copyright© 2010 [JAMSAZ] ALL RIGHTS RESERVED</Label>
+                <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" x:Name="timeLabel" FontSize="10" VerticalAlignment="Bottom" Margin="6,0,464,26"></Label>
+            </Grid>
+        </Border>
+
+        <Grid Name="clockGrid" Grid.Row="2" Grid.Column="1" Width="200" Height="200" 
+                  MouseLeftButtonDown="clockGrid_MouseLeftButtonDown" VerticalAlignment="Bottom"
+                  HorizontalAlignment="Right" Grid.RowSpan="1" Margin="0,0,0,0">
+            <Image Source="/Images/backGround1.png">
+                
+                
+                
+            </Image>
+            <!-- Second  -->
+            
+            <Rectangle Margin="100,0,99,100" Name="rectangleSecond" Stroke="LightGreen" Height="75" VerticalAlignment="Bottom">
+                <Rectangle.RenderTransform>
+                    <RotateTransform x:Name="secondHand" CenterX="0" CenterY="75" Angle="0" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <!-- -->
+            <!-- Minute  -->
+            <Rectangle Margin="100,40,99,100" Name="rectangleMinute" Stroke="White">
+                <Rectangle.RenderTransform>
+                    <RotateTransform x:Name="minuteHand" CenterX="0" CenterY="60" Angle="0" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <!-- -->
+            <!-- Hour  -->
+            <Rectangle Margin="100,60,99,100" Name="rectangleHour" Stroke="LightYellow">
+                <Rectangle.RenderTransform>
+                    <RotateTransform x:Name="hourHand" CenterX="0" CenterY="40" Angle="0" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <!---->
+                <Ellipse Margin="0"  StrokeThickness="0" Width="10" Height="10">
+    		<Ellipse.Fill>
+    			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    				<GradientStop Color="#FF325C90" Offset="0.004"/>
+    				<GradientStop Color="#FF0F2F65" Offset="1"/>
+    			</LinearGradientBrush>
+    		</Ellipse.Fill>
+    	</Ellipse>
+            </Grid>
+            
+        <Image Source="/Images/manager.png" Height="64" Width="64" Margin="20,0" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" />
+            
+        <Image Source="/Images/minimize.png" Height="58" Width="56" Margin="24,72" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonDown="minimize" Cursor="Hand"/>
+            
+        <Image Source="/Images/window_close.png" Height="64" Width="64" Margin="20,140" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonDown="close" Cursor="Hand"/>
+            
+        <Image Source="/Images/lock.png" Height="64" Width="64" Margin="20,210" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonDown="Image_MouseLeftButtonDown" Cursor="Hand"/>
+        
+    </Grid>
+</Window>

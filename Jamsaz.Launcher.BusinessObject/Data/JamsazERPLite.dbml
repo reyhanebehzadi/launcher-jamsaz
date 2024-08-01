@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="JamsazERPLite" Class="JamsazERPLiteDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=atlas;Initial Catalog=JamsazERPLite;Integrated Security=True" SettingsObjectName="Jamsaz.Launcher.BusinessObject.Properties.Settings" SettingsPropertyName="JamsazERPLiteConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="uac.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="DepartmentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PersonnelID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.Data.Linq.Binary" DbType="VarBinary(1024) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="ExpirationDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SupplierID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="uac.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="BusinessApplicationID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Role_RoleMember" Member="RoleMembers" ThisKey="ID" OtherKey="RoleID" Type="RoleMember" />
+      <Association Name="Role_RoleAction" Member="RoleActions" ThisKey="ID" OtherKey="RoleID" Type="RoleAction" />
+      <Association Name="BusinessApplication_Role" Member="BusinessApplication" ThisKey="BusinessApplicationID" OtherKey="ID" Type="BusinessApplication" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="uac.RoleMembers" Member="RoleMembers">
+    <Type Name="RoleMember">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoleID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ActiveDirectoryObjectType" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ActiveDirectoryGuid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="GroupName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DomainControllerName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PersonnelID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Role_RoleMember" Member="Role" ThisKey="RoleID" OtherKey="ID" Type="Role" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="uac.RoleActions" Member="RoleActions">
+    <Type Name="RoleAction">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ActionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RoleID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Role_RoleAction" Member="Role" ThisKey="RoleID" OtherKey="ID" Type="Role" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Action_RoleAction" Member="Action" ThisKey="ActionID" OtherKey="ID" Type="Action" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="uac.[Log]" Member="Logs">
+    <Type Name="Log">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="DeletedID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="uac.ApplicationForms" Member="ApplicationForms">
+    <Type Name="ApplicationForm">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="[Key]" Member="Key" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="BusinessApplicationID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ApplicationForm_Action" Member="Actions" ThisKey="ID" OtherKey="ApplicationFormID" Type="Action" />
+      <Association Name="ApplicationForm_ActionControlPropertyValue" Member="ActionControlPropertyValues" ThisKey="ID" OtherKey="ApplicationFormID" Type="ActionControlPropertyValue" />
+      <Association Name="BusinessApplication_ApplicationForm" Member="BusinessApplication" ThisKey="BusinessApplicationID" OtherKey="ID" Type="BusinessApplication" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="uac.Actions" Member="Actions">
+    <Type Name="Action">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="[Key]" Member="Key" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="ApplicationFormID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Action_RoleAction" Member="RoleActions" ThisKey="ID" OtherKey="ActionID" Type="RoleAction" />
+      <Association Name="Action_ActionControlPropertyValue" Member="ActionControlPropertyValues" ThisKey="ID" OtherKey="ActionID" Type="ActionControlPropertyValue" />
+      <Association Name="ApplicationForm_Action" Member="ApplicationForm" ThisKey="ApplicationFormID" OtherKey="ID" Type="ApplicationForm" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="uac.ActionControlPropertyValues" Member="ActionControlPropertyValues">
+    <Type Name="ActionControlPropertyValue">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ActionID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ApplicationFormID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ControlName" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="ControlIndex" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PropertyName" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="PropertyValue" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsDefault" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Action_ActionControlPropertyValue" Member="Action" ThisKey="ActionID" OtherKey="ID" Type="Action" IsForeignKey="true" />
+      <Association Name="ApplicationForm_ActionControlPropertyValue" Member="ApplicationForm" ThisKey="ApplicationFormID" OtherKey="ID" Type="ApplicationForm" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="inv.FiscalYears" Member="FiscalYears">
+    <Type Name="FiscalYear">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="uac.BusinessApplications" Member="BusinessApplications">
+    <Type Name="BusinessApplication" Id="ID1">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="InstallationPath" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="Icon" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="IsWebbase" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="BusinessApplication_Role" Member="Roles" ThisKey="ID" OtherKey="BusinessApplicationID" Type="Role" />
+      <Association Name="BusinessApplication_ApplicationForm" Member="ApplicationForms" ThisKey="ID" OtherKey="BusinessApplicationID" Type="ApplicationForm" />
+    </Type>
+  </Table>
+  <Function Name="uac.GetAllApproachabilityApplications" Method="GetAllApproachabilityApplications">
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="GroupsCUID" Parameter="groupsCUID" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="IsActiveDirectoryUser" Parameter="isActiveDirectoryUser" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PersonnelID" Parameter="personnelID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetAllApproachabilityApplicationsResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="InstallationPath" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="Icon" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="uac.SelectBussinessApplications" Method="SelectBussinessApplications">
+    <Parameter Name="IDs" Parameter="iDs" Type="System.String" DbType="NVarChar(1024)" />
+    <ElementType IdRef="ID1" />
+  </Function>
+</Database>

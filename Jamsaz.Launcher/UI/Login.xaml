@@ -1,0 +1,97 @@
+﻿<Window x:Class="Jamsaz.Launcher.UI.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:entities="clr-namespace:Jamsaz.Launcher.BusinessObject.Data;assembly=Jamsaz.Launcher.BusinessObject"
+        Title="Login" Height="250" Width="400" WindowStyle="None" WindowStartupLocation="Manual" ResizeMode="NoResize" FontFamily="Tahoma" FontSize="10"
+        AllowsTransparency="True" ShowInTaskbar="True" 
+        Style="{StaticResource ResourceKey=Launcher}" 
+        Background="Transparent" FlowDirection="RightToLeft"
+        FocusManager.FocusedElement="{Binding ElementName=passwordTextbox}" Loaded="Window_Loaded" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        >
+    <Window.Resources>
+        <CollectionViewSource x:Key="fiscalYearViewSource" d:DesignSource="{d:DesignInstance entities:FiscalYear, CreateList=True}" />
+    </Window.Resources>
+    <Border CornerRadius="30"
+          BorderBrush="Gray"
+          BorderThickness="3"
+          Margin="24"
+          Padding="4" MouseLeftButtonDown="Grid_MouseLeftButtonDown" PreviewMouseLeftButtonDown="Grid_MouseLeftButtonDown">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+                <GradientStop Color="LightSteelBlue" Offset="0"/>
+                <GradientStop Color="LightYellow" Offset=".2"/>
+                <GradientStop Color="SteelBlue" Offset=".4"/>
+                <GradientStop Color="LightYellow" Offset=".8"/>
+                <GradientStop Color="LightSteelBlue" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border.Effect>
+            <DropShadowEffect Color="DarkGray"
+                        Opacity=".50"
+                        ShadowDepth="50" />
+        </Border.Effect>
+
+
+
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel 
+                Grid.Column="0"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                VerticalAlignment="Center" HorizontalAlignment="Right">
+                <Image Source="/Images/Login.png">
+                    <Image.Effect>
+                        <DropShadowEffect   
+                           Color="Gold"
+                            Opacity=".50"
+                            ShadowDepth="10">
+                        </DropShadowEffect>
+                    </Image.Effect>
+                </Image>
+            </StackPanel>
+            <Label x:Name="userNameLabel" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" >نام کاربری :</Label>
+            <Label x:Name="passwordLabel" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" >رمز ورود :</Label>
+            <TextBox x:Name="userNametextBox"  Grid.Column="2" Grid.Row="1" Height="23"  Width="125" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+            <PasswordBox x:Name="passwordTextbox" Grid.Column="2" Grid.Row="2" Height="23" Width="125" VerticalAlignment="Top" HorizontalAlignment="Left" PasswordChar="*" PasswordChanged="passwordTextbox_PasswordChanged"/>
+            <StackPanel Grid.Column="3" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="cancelButon" Width="70" Height="23" Click="cancelButon_Click" >
+                    <Button.Content>
+                        <DockPanel LastChildFill="False" Width="60">
+                            <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" >بازگشت</TextBlock>
+                            <Image Source="/Images/Back.ico" Height="23" DockPanel.Dock="Right" VerticalAlignment="Center"></Image>
+                        </DockPanel>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="okButton" Width="70" Height="23" Click="okButton_Click" >
+                    <Button.Content>
+                        <DockPanel LastChildFill="False" Width="60">
+                            <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">ورود</TextBlock>
+                            <Image Source="/Images/Enter.ico" Height="23" DockPanel.Dock="Right" VerticalAlignment="Center"></Image>
+                        </DockPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" Orientation="Horizontal" VerticalAlignment="Center" DataContext="{StaticResource fiscalYearViewSource}">
+                <Label>سال مالی :</Label>
+                <ComboBox x:Name="fiscalyearComboBox"  Width="70" Height="20" Foreground="Black" DisplayMemberPath="Title" ItemsSource="{Binding}" SelectedValuePath="ID"></ComboBox>
+            </StackPanel>
+            <Label x:Name="messageLabel" Grid.Column="3" Grid.Row="4" Foreground="Red" Visibility="Hidden"></Label>
+
+        </Grid>
+    </Border>
+</Window>
